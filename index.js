@@ -14,20 +14,15 @@ const connection = new Connection("http://127.0.0.1:8899", "confirmed");
 
     // Generate a new keypair
 const from = Keypair.generate();
-console.log(from.publicKey.toString());
-console.log(from.secretKey);
+
 // Generate another Keypair (account we'll be sending to)
 const to = Keypair.generate();
-console.log(to.publicKey.toString());
-console.log(to.secretKey);
-
-let solBalance;
 
 const getWalletBalance = async (publicKey, recepient) => {
     try {
         // Get balance of the user provided wallet address new PublicKey(publicKey)
         const walletBalance = await connection.getBalance(new PublicKey(publicKey));
-        solBalance = parseInt(walletBalance) / LAMPORTS_PER_SOL;            
+        const solBalance = parseInt(walletBalance) / LAMPORTS_PER_SOL;            
         console.log(`${recepient} Wallet balance: ${solBalance} SOL`);
 
     } catch (err) {
@@ -87,14 +82,3 @@ airDropSol().then(async () => {
     await getWalletBalance(from.publicKey,"after send from");
     await getWalletBalance(to.publicKey,"after send to");
 });
-
-
-
-// getWalletBalance(to.publicKey.toString(),"from");   
-
-
-// console.log('    ------------SENDING SOL------------');
-// transferSol();
-
-// console.log(LAMPORTS_PER_SOL);
-// getWalletBalance("5SmG3kW6uxhmnqbWnUjW4N15eT4fYd2m7bhQZiNDazQY",new Connection("http://127.0.0.1:8899", "confirmed"));
